@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 
 interface PhotoStripProps {
@@ -10,6 +10,21 @@ interface PhotoStripProps {
 
 export const PhotoStrip: React.FC<PhotoStripProps> = ({ photos, onReset }) => {
   const photoStripRef = React.useRef<HTMLDivElement>(null);
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  useEffect(() => {
+    const checkOrientation = () => {
+      setIsPortrait(window.innerHeight > window.innerWidth);
+    };
+    
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+      window.removeEventListener('orientationchange', checkOrientation);
+    };
+  }, []);
 
   const downloadPhotoStrip = async () => {
     if (!photoStripRef.current) return;
@@ -48,11 +63,13 @@ export const PhotoStrip: React.FC<PhotoStripProps> = ({ photos, onReset }) => {
               <div className="h-1 bg-[#C41E3A] w-24 sm:w-32 mx-auto"></div>
             </div>
 
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-4 sm:space-y-6">
               {photos.map((photo, index) => (
                 <div
                   key={index}
-                  className="relative overflow-hidden monopoly-property-card aspect-video"
+                  className={`relative overflow-hidden monopoly-property-card ${
+                    isPortrait ? 'aspect-[3/4]' : 'aspect-video'
+                  }`}
                 >
                   <img
                     src={photo}
@@ -70,16 +87,16 @@ export const PhotoStrip: React.FC<PhotoStripProps> = ({ photos, onReset }) => {
       </div>
 
       {/* Centered Buttons */}
-      <div className="max-w-md mx-auto w-full px-4 mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <div className="max-w-md mx-auto w-full px-4 mt-6 sm:mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
         <button
           onClick={downloadPhotoStrip}
-          className="w-full sm:w-auto bg-[#1B1B75] text-white px-8 py-3 rounded-lg hover:bg-[#C41E3A] transition-colors duration-200 uppercase font-bold tracking-wide shadow-lg border-2 border-[#F5F5DC] min-w-[200px]"
+          className="w-full sm:w-auto bg-[#1B1B75] text-white px-6 sm:px-8 py-3 rounded-lg hover:bg-[#C41E3A] transition-colors duration-200 uppercase font-bold tracking-wide shadow-lg border-2 border-[#F5F5DC] min-w-[200px]"
         >
           Download Photos
         </button>
         <button
           onClick={onReset}
-          className="w-full sm:w-auto bg-[#008852] text-white px-8 py-3 rounded-lg hover:bg-[#126CC3] transition-colors duration-200 uppercase font-bold tracking-wide shadow-lg border-2 border-[#F5F5DC] min-w-[200px]"
+          className="w-full sm:w-auto bg-[#008852] text-white px-6 sm:px-8 py-3 rounded-lg hover:bg-[#126CC3] transition-colors duration-200 uppercase font-bold tracking-wide shadow-lg border-2 border-[#F5F5DC] min-w-[200px]"
         >
           Start Over
         </button>

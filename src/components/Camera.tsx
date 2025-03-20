@@ -12,15 +12,23 @@ interface CameraProps {
 export const Camera: React.FC<CameraProps> = ({ onCapture, isCapturing, countdown }) => {
   const webcamRef = useRef<Webcam>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkDevice = () => {
+      const mobile = window.innerWidth < 768;
+      const portrait = window.innerHeight > window.innerWidth;
+      setIsMobile(mobile);
+      setIsPortrait(portrait);
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    window.addEventListener('orientationchange', checkDevice);
+    return () => {
+      window.removeEventListener('resize', checkDevice);
+      window.removeEventListener('orientationchange', checkDevice);
+    };
   }, []);
 
   const capture = useCallback(() => {
@@ -39,18 +47,17 @@ export const Camera: React.FC<CameraProps> = ({ onCapture, isCapturing, countdow
   }, [isCapturing, countdown, capture]);
 
   const videoConstraints = {
-    width: isMobile ? 1280 : 1920,
-    height: isMobile ? 720 : 1080,
-    minWidth: isMobile ? 720 : 1280,
-    minHeight: isMobile ? 480 : 720,
-    idealWidth: isMobile ? 1280 : 1920,
-    idealHeight: isMobile ? 720 : 1080,
-    facingMode: "user"
+    width: isPortrait ? 720 : 1280,
+    height: isPortrait ? 1280 : 720,
+    facingMode: isMobile ? "environment" : "user",
+    aspectRatio: isPortrait ? 3/4 : 16/9
   };
 
   return (
     <div className="relative w-full max-w-[95%] sm:max-w-xl md:max-w-2xl mx-auto px-2 sm:px-0">
-      <div className="relative aspect-video overflow-hidden rounded-lg border-4 border-[#ED1B24] shadow-xl">
+      <div className={`relative overflow-hidden rounded-lg border-4 border-[#ED1B24] shadow-xl ${
+        isPortrait ? 'aspect-[3/4]' : 'aspect-video'
+      }`}>
         <Webcam
           audio={false}
           ref={webcamRef}
