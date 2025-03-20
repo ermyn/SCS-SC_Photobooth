@@ -12,12 +12,12 @@ export const PreviewRow: React.FC<PreviewRowProps> = ({ photos, totalSlots }) =>
   const allSlots = [...photos, ...emptySlots];
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-12">
-      <div className="flex justify-center gap-6">
+    <div className="w-full max-w-[95%] sm:max-w-xl md:max-w-2xl mx-auto mt-8 sm:mt-12">
+      <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start gap-4 sm:gap-6">
         {allSlots.map((photo, index) => (
           <div
             key={index}
-            className={`relative w-48 aspect-video overflow-hidden ${
+            className={`relative w-full sm:w-40 md:w-48 aspect-video overflow-hidden ${
               photo ? 'monopoly-preview-slot' : 'monopoly-preview-slot-empty'
             }`}
           >
