@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Camera } from '@/components/Camera';
 import { PhotoStrip } from '@/components/PhotoStrip';
+import { PreviewRow } from '@/components/PreviewRow';
 
 export default function Home() {
   const [photos, setPhotos] = useState<string[]>([]);
@@ -46,9 +47,10 @@ export default function Home() {
         </div>
 
         {photos.length < 3 ? (
-          <div className="w-full flex flex-col items-center space-y-8">
+          <div className="w-full flex flex-col items-center space-y-4">
             <Camera onCapture={handleCapture} isCapturing={isCapturing} countdown={countdown} />
-            <div className="text-center mt-4">
+            <PreviewRow photos={photos} totalSlots={3} />
+            <div className="text-center mt-6">
               <p className="text-lg mb-4">
                 {3 - photos.length} photos remaining
               </p>
