@@ -28,10 +28,8 @@ export const PreviewRow: React.FC<PreviewRowProps> = ({ photos, totalSlots }) =>
   const allSlots = [...photos, ...emptySlots];
 
   return (
-    <div className={`w-full max-w-[95%] sm:max-w-xl md:max-w-2xl mx-auto ${
-      isPortrait ? 'mt-4' : 'mt-8 sm:mt-12'
-    }`}>
-      <div className={`flex justify-center items-center gap-4 ${
+    <div className="w-full sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2">
+      <div className={`flex justify-center items-center gap-4 sm:gap-8 ${
         isPortrait ? 'flex-col' : 'flex-row'
       }`}>
         {allSlots.map((photo, index) => (
@@ -39,8 +37,8 @@ export const PreviewRow: React.FC<PreviewRowProps> = ({ photos, totalSlots }) =>
             key={index}
             className={`relative overflow-hidden ${
               isPortrait
-                ? 'w-full max-w-[280px] aspect-[3/4]'
-                : 'w-full sm:w-40 md:w-48 aspect-video'
+                ? 'w-full max-w-[200px] sm:max-w-[280px] aspect-[3/4]'
+                : 'w-full sm:w-56 md:w-64 aspect-video'
             } ${
               photo ? 'monopoly-preview-slot' : 'monopoly-preview-slot-empty'
             }`}

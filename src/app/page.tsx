@@ -37,9 +37,9 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F5F5DC] flex flex-col items-center justify-start p-2 sm:p-4 md:p-8">
-      <div className="w-full max-w-3xl mx-auto flex flex-col items-center">
-        <div className="text-center mb-6 sm:mb-12">
+    <main className="min-h-screen bg-[#F5F5DC] flex flex-col items-center justify-between p-2 sm:p-4">
+      <div className="w-full max-w-4xl mx-auto flex flex-col items-center h-full">
+        <div className="text-center mb-4 sm:mb-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#ED1B24] mb-2">
             SCS Photobooth
           </h1>
@@ -47,20 +47,27 @@ export default function Home() {
         </div>
 
         {photos.length < 3 ? (
-          <div className="w-full flex flex-col items-center space-y-6 sm:space-y-8">
-            <Camera onCapture={handleCapture} isCapturing={isCapturing} countdown={countdown} />
-            <PreviewRow photos={photos} totalSlots={3} />
-            <div className="text-center mt-4 sm:mt-8">
-              <p className="text-base sm:text-lg mb-4">
-                {3 - photos.length} photos remaining
-              </p>
-              <button
-                onClick={startCapture}
-                disabled={isCapturing}
-                className="w-full sm:w-auto bg-[#ED1B24] text-white px-6 sm:px-8 py-3 rounded-full hover:bg-[#126CC3] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed uppercase font-bold tracking-wide"
-              >
-                {isCapturing ? 'Taking Photo...' : 'Take Photo'}
-              </button>
+          <div className="w-full flex flex-col items-center justify-between flex-1 py-4">
+            <div className="w-full">
+              <Camera onCapture={handleCapture} isCapturing={isCapturing} countdown={countdown} />
+              <div className="text-center w-full px-4 mt-6">
+                <p className="text-base font-medium mb-3">
+                  {3 - photos.length} photos remaining
+                </p>
+                <button
+                  onClick={startCapture}
+                  disabled={isCapturing}
+                  className="w-full bg-[#ED1B24] text-white px-6 py-3 rounded-full hover:bg-[#126CC3] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed uppercase font-bold tracking-wide"
+                >
+                  {isCapturing ? 'Taking Photo...' : 'Take Photo'}
+                </button>
+              </div>
+            </div>
+            
+            <div className="w-full sm:relative sm:h-[50vh] sm:my-16">
+              <div className="mt-12 sm:mt-0">
+                <PreviewRow photos={photos} totalSlots={3} />
+              </div>
             </div>
           </div>
         ) : (
