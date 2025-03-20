@@ -30,40 +30,48 @@ export const PhotoStrip: React.FC<PhotoStripProps> = ({ photos }) => {
     <div className="w-full max-w-lg mx-auto">
       <div
         ref={photoStripRef}
-        className="bg-[#F5F5DC] p-8 rounded-lg shadow-xl border-4 border-[#ED1B24]"
+        className="monopoly-double-border bg-[#F5F5DC] p-8"
       >
-        <div className="text-center mb-4">
-          <h2 className="text-[#ED1B24] text-2xl font-bold uppercase tracking-wider mb-2">
-            Photos
-          </h2>
-          <div className="h-1 bg-[#126CC3] w-32 mx-auto"></div>
-        </div>
+        <div className="relative p-6">
+          {/* Corner Decorations */}
+          <div className="monopoly-corner-decoration top-0 left-0"></div>
+          <div className="monopoly-corner-decoration top-0 right-0 rotate-90"></div>
+          <div className="monopoly-corner-decoration bottom-0 left-0 -rotate-90"></div>
+          <div className="monopoly-corner-decoration bottom-0 right-0 rotate-180"></div>
 
-        <div className="space-y-6">
-          {photos.map((photo, index) => (
-            <div
-              key={index}
-              className="relative overflow-hidden rounded border-4 border-[#ED1B24]"
-            >
-              <img
-                src={photo}
-                alt={`Photo ${index + 1}`}
-                className="w-full h-auto"
-              />
-              <div className="absolute bottom-2 right-2 bg-[#008852] text-white px-2 py-1 text-xs rounded">
-                #{index + 1}
+          <div className="text-center mb-6 monopoly-property-card">
+            <h2 className="text-[#1B1B75] text-3xl font-bold uppercase tracking-wider mb-2">
+              TITLE DEED
+            </h2>
+            <div className="h-1 bg-[#C41E3A] w-32 mx-auto"></div>
+          </div>
+
+          <div className="space-y-8">
+            {photos.map((photo, index) => (
+              <div
+                key={index}
+                className="relative overflow-hidden monopoly-property-card aspect-video"
+              >
+                <img
+                  src={photo}
+                  alt={`Photo ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-2 right-2 bg-[#1B1B75] text-white px-3 py-1 text-sm rounded-full font-bold">
+                  RENT ${(index + 1) * 100}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="mt-8 text-center">
-          <button
-            onClick={downloadPhotoStrip}
-            className="bg-[#ED1B24] text-white px-6 py-2 rounded-full hover:bg-[#126CC3] transition-colors duration-200 uppercase font-bold tracking-wide"
-          >
-            Download Photo Strip
-          </button>
+          <div className="mt-10 text-center">
+            <button
+              onClick={downloadPhotoStrip}
+              className="bg-[#1B1B75] text-white px-8 py-3 rounded-lg hover:bg-[#C41E3A] transition-colors duration-200 uppercase font-bold tracking-wide shadow-lg border-2 border-[#F5F5DC]"
+            >
+              Download Photo Strip
+            </button>
+          </div>
         </div>
       </div>
     </div>

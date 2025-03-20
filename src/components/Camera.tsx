@@ -28,14 +28,18 @@ export const Camera: React.FC<CameraProps> = ({ onCapture, isCapturing, countdow
   }, [isCapturing, countdown, capture]);
 
   const videoConstraints = {
-    width: 720,
-    height: 720,
+    width: 1920,
+    height: 1080,
+    minWidth: 1280,
+    minHeight: 720,
+    idealWidth: 1920,
+    idealHeight: 1080,
     facingMode: "user"
   };
 
   return (
-    <div className="relative w-full max-w-xl mx-auto">
-      <div className="relative aspect-square overflow-hidden rounded-lg border-4 border-[#ED1B24] shadow-xl">
+    <div className="relative w-full max-w-2xl mx-auto">
+      <div className="relative aspect-video overflow-hidden rounded-lg border-4 border-[#ED1B24] shadow-xl">
         <Webcam
           audio={false}
           ref={webcamRef}

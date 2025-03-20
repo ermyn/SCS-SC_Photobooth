@@ -24,14 +24,46 @@ body {
   }
 
   .monopoly-border {
-    @apply border-4 border-[#ED1B24] rounded-lg shadow-xl;
+    @apply border-4 border-[#C41E3A] rounded-lg shadow-xl;
   }
 
   .monopoly-heading {
-    @apply text-4xl md:text-5xl font-bold text-[#ED1B24] mb-2;
+    @apply text-4xl md:text-5xl font-bold text-[#C41E3A] mb-2;
   }
 
   .monopoly-divider {
-    @apply h-1 bg-[#126CC3] w-48 mx-auto;
+    @apply h-1 bg-[#1B1B75] w-48 mx-auto;
+  }
+
+  .monopoly-property-card {
+    @apply relative border-4 border-[#1B1B75] bg-white rounded-lg p-4 shadow-lg;
+  }
+
+  .monopoly-double-border {
+    @apply relative p-1 bg-[#C41E3A] rounded-xl;
+  }
+
+  .monopoly-double-border::before {
+    content: '';
+    @apply absolute inset-[4px] border-2 border-[#F5F5DC] rounded-lg;
+  }
+
+  .monopoly-double-border::after {
+    content: '';
+    @apply absolute -inset-1 border-4 border-[#1B1B75] rounded-xl;
+  }
+
+  .monopoly-corner-decoration {
+    @apply absolute w-8 h-8 bg-[#F5F5DC];
+  }
+
+  .monopoly-corner-decoration::before {
+    content: '';
+    @apply absolute inset-0 border-2 border-[#1B1B75];
+  }
+
+  .monopoly-corner-decoration::after {
+    content: '';
+    @apply absolute w-4 h-4 bg-[#C41E3A] transform rotate-45 left-2 top-2;
   }
 }
