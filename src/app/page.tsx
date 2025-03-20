@@ -47,10 +47,10 @@ export default function Home() {
         </div>
 
         {photos.length < 3 ? (
-          <div className="w-full flex flex-col items-center space-y-4">
+          <div className="w-full flex flex-col items-center space-y-8">
             <Camera onCapture={handleCapture} isCapturing={isCapturing} countdown={countdown} />
             <PreviewRow photos={photos} totalSlots={3} />
-            <div className="text-center mt-6">
+            <div className="text-center mt-8">
               <p className="text-lg mb-4">
                 {3 - photos.length} photos remaining
               </p>

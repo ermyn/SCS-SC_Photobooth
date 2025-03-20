@@ -12,12 +12,12 @@ export const PreviewRow: React.FC<PreviewRowProps> = ({ photos, totalSlots }) =>
   const allSlots = [...photos, ...emptySlots];
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-6">
-      <div className="flex justify-center gap-4">
+    <div className="w-full max-w-2xl mx-auto mt-12">
+      <div className="flex justify-center gap-6">
         {allSlots.map((photo, index) => (
           <div
             key={index}
-            className={`relative w-32 aspect-video overflow-hidden ${
+            className={`relative w-48 aspect-video overflow-hidden ${
               photo ? 'monopoly-preview-slot' : 'monopoly-preview-slot-empty'
             }`}
           >
@@ -29,7 +29,7 @@ export const PreviewRow: React.FC<PreviewRowProps> = ({ photos, totalSlots }) =>
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-xl font-bold text-[#C41E3A] opacity-50">
+                <span className="text-2xl font-bold text-[#C41E3A] opacity-50">
                   {index + 1}
                 </span>
               </div>
