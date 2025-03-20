@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import Webcam from 'react-webcam';
 
 interface CameraProps {
   onCapture: (photo: string) => void;
   isCapturing: boolean;
+  countdown: number | null;
 }
 
-export const Camera: React.FC<CameraProps> = ({ onCapture, isCapturing }) => {
+export const Camera: React.FC<CameraProps> = ({ onCapture, isCapturing, countdown }) => {
   const webcamRef = useRef<Webcam>(null);
-  const [countdown, setCountdown] = useState<number | null>(null);
 
   const capture = useCallback(() => {
     if (webcamRef.current) {
@@ -22,22 +22,10 @@ export const Camera: React.FC<CameraProps> = ({ onCapture, isCapturing }) => {
   }, [onCapture]);
 
   React.useEffect(() => {
-    if (isCapturing) {
-      setCountdown(3);
-      const intervalId = setInterval(() => {
-        setCountdown((prev) => {
-          if (prev === 1) {
-            clearInterval(intervalId);
-            capture();
-            return null;
-          }
-          return prev ? prev - 1 : null;
-        });
-      }, 1000);
-
-      return () => clearInterval(intervalId);
+    if (isCapturing && countdown === 0) {
+      capture();
     }
-  }, [isCapturing, capture]);
+  }, [isCapturing, countdown, capture]);
 
   const videoConstraints = {
     width: 720,
@@ -46,8 +34,8 @@ export const Camera: React.FC<CameraProps> = ({ onCapture, isCapturing }) => {
   };
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
-      <div className="relative aspect-square overflow-hidden rounded-lg border-8 border-[#ED1B24] shadow-xl">
+    <div className="relative w-full max-w-xl mx-auto">
+      <div className="relative aspect-square overflow-hidden rounded-lg border-4 border-[#ED1B24] shadow-xl">
         <Webcam
           audio={false}
           ref={webcamRef}
@@ -57,7 +45,7 @@ export const Camera: React.FC<CameraProps> = ({ onCapture, isCapturing }) => {
         />
         {countdown && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-9xl font-bold text-white drop-shadow-lg">
+            <span className="text-8xl font-bold text-white drop-shadow-lg">
               {countdown}
             </span>
           </div>

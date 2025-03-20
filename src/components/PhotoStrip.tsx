@@ -27,19 +27,19 @@ export const PhotoStrip: React.FC<PhotoStripProps> = ({ photos }) => {
   if (photos.length === 0) return null;
 
   return (
-    <div className="w-full max-w-md mx-auto mt-8">
+    <div className="w-full max-w-lg mx-auto">
       <div
         ref={photoStripRef}
-        className="bg-[#F5F5DC] p-6 rounded-lg shadow-xl"
+        className="bg-[#F5F5DC] p-8 rounded-lg shadow-xl border-4 border-[#ED1B24]"
       >
         <div className="text-center mb-4">
           <h2 className="text-[#ED1B24] text-2xl font-bold uppercase tracking-wider mb-2">
-            Monopoly Photobooth
+            Photos
           </h2>
           <div className="h-1 bg-[#126CC3] w-32 mx-auto"></div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           {photos.map((photo, index) => (
             <div
               key={index}
@@ -57,12 +57,12 @@ export const PhotoStrip: React.FC<PhotoStripProps> = ({ photos }) => {
           ))}
         </div>
 
-        <div className="mt-6 text-center">
+        <div className="mt-8 text-center">
           <button
             onClick={downloadPhotoStrip}
             className="bg-[#ED1B24] text-white px-6 py-2 rounded-full hover:bg-[#126CC3] transition-colors duration-200 uppercase font-bold tracking-wide"
           >
-            Download Photos
+            Download Photo Strip
           </button>
         </div>
       </div>

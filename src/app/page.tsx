@@ -1,42 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Camera } from '@/components/Camera';
 import { PhotoStrip } from '@/components/PhotoStrip';
 
 export default function Home() {
   const [photos, setPhotos] = useState<string[]>([]);
   const [isCapturing, setIsCapturing] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   const handleCapture = (photo: string) => {
     setPhotos((prev) => [...prev, photo]);
     setIsCapturing(false);
+    setCountdown(null);
   };
 
   const startCapture = () => {
     if (photos.length < 3) {
       setIsCapturing(true);
+      setCountdown(3);
     }
   };
+
+  useEffect(() => {
+    if (isCapturing && countdown !== null && countdown > 0) {
+      const timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isCapturing, countdown]);
 
   const resetPhotos = () => {
     setPhotos([]);
   };
 
   return (
-    <main className="min-h-screen bg-[#F5F5DC] p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
+    <main className="min-h-screen bg-[#F5F5DC] flex flex-col items-center justify-start p-4 md:p-8">
+      <div className="w-full max-w-3xl mx-auto flex flex-col items-center">
+        <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-[#ED1B24] mb-2">
-            Monopoly Photobooth
+            SCS Photobooth
           </h1>
           <div className="h-1 bg-[#126CC3] w-48 mx-auto"></div>
         </div>
 
         {photos.length < 3 ? (
-          <div className="space-y-6">
-            <Camera onCapture={handleCapture} isCapturing={isCapturing} />
-            <div className="text-center">
+          <div className="w-full flex flex-col items-center space-y-8">
+            <Camera onCapture={handleCapture} isCapturing={isCapturing} countdown={countdown} />
+            <div className="text-center mt-4">
               <p className="text-lg mb-4">
                 {3 - photos.length} photos remaining
               </p>
@@ -50,9 +62,9 @@ export default function Home() {
             </div>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="w-full flex flex-col items-center space-y-8">
             <PhotoStrip photos={photos} />
-            <div className="text-center">
+            <div className="text-center mt-4">
               <button
                 onClick={resetPhotos}
                 className="bg-[#008852] text-white px-8 py-3 rounded-full hover:bg-[#126CC3] transition-colors duration-200 uppercase font-bold tracking-wide"
