@@ -1,26 +1,37 @@
+@import "tailwindcss/preflight";
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --monopoly-red: #ED1B24;
+  --monopoly-blue: #126CC3;
+  --monopoly-green: #008852;
+  --monopoly-yellow: #FEF200;
+  --monopoly-board: #F5F5DC;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--monopoly-board);
+  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@layer utilities {
+  .monopoly-button {
+    @apply bg-[#ED1B24] text-white px-8 py-3 rounded-full 
+           hover:bg-[#126CC3] transition-colors duration-200 
+           uppercase font-bold tracking-wide;
+  }
+
+  .monopoly-border {
+    @apply border-4 border-[#ED1B24] rounded-lg shadow-xl;
+  }
+
+  .monopoly-heading {
+    @apply text-4xl md:text-5xl font-bold text-[#ED1B24] mb-2;
+  }
+
+  .monopoly-divider {
+    @apply h-1 bg-[#126CC3] w-48 mx-auto;
+  }
 }
